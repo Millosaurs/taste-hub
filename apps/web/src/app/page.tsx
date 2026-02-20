@@ -16,7 +16,7 @@ export default function Home() {
           {/* Logo */}
           <div className="space-y-2">
             <h1 className="text-4xl sm:text-5xl font-bold text-accent-yellow tracking-tight">
-              TASTE HUB
+              tastefr
             </h1>
             <p className="text-lg sm:text-xl text-text-secondary">
               Know your palate

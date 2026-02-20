@@ -21,7 +21,7 @@ export default function DashboardPage() {
         {/* Header */}
         <div className="flex items-center justify-between mb-6 sm:mb-8">
           <div>
-            <h1 className="text-2xl sm:text-3xl font-bold text-accent-yellow">TASTE HUB</h1>
+            <h1 className="text-2xl sm:text-3xl font-bold text-accent-yellow">tastefr</h1>
             <p className="text-text-secondary text-sm sm:text-base mt-0.5 sm:mt-1">Staff Dashboard</p>
           </div>
           <Link 
