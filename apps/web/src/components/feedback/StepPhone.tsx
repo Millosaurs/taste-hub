@@ -85,7 +85,7 @@ export function StepPhone() {
 
       {/* Logo/Wordmark */}
       <div className="mb-8 sm:mb-12 text-center">
-        <h1 className="text-2xl sm:text-3xl font-bold text-accent-yellow">TASTE HUB</h1>
+        <h1 className="text-2xl sm:text-3xl font-bold text-accent-yellow">tastefr</h1>
         <p className="text-text-secondary mt-1 sm:mt-2 text-sm sm:text-base">Know your palate</p>
       </div>
 
