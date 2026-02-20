@@ -1,0 +1,3 @@
+{
+  "extends": "@idt-shit/config/tsconfig.base.json"
+}

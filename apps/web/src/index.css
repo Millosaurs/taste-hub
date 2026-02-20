@@ -1,0 +1,422 @@
+@import "tailwindcss";
+@import "tw-animate-css";
+
+@custom-variant dark (&:is(.dark *));
+
+/* 
+ * NEO-BRUTALIST LIGHT UI DESIGN SYSTEM
+ * ====================================
+ * Base palette: warm whites and grays
+ * Single accent: electric yellow #E8FF47
+ * Hard offset shadows on interactive elements only
+ * Consistent 4px grid spacing
+ */
+
+:root {
+  /* Base colors - light mode */
+  --base: #FAFAFA;
+  --surface: #FFFFFF;
+  --raised: #F0F0F0;
+  --border: #E0E0E0;
+  
+  /* Text colors */
+  --text-primary: #1A1A1A;
+  --text-secondary: #525252;
+  --text-muted: #9CA3AF;
+  
+  /* Accent colors - use sparingly */
+  --accent-yellow: #F59E0B;  /* Amber - better contrast for light mode */
+  --accent-red: #DC2626;     /* Heat/danger states only */
+  --accent-green: #16A34A;   /* Success/mild states only */
+  
+  /* Hard offset shadows - darker for light mode */
+  --shadow-brutal: 4px 4px 0px #1A1A1A;
+  --shadow-brutal-hover: 5px 5px 0px #1A1A1A;
+  --shadow-brutal-active: 0px 0px 0px #1A1A1A;
+  
+  /* Border radius */
+  --radius-button: 14px;
+  --radius-card: 20px;
+  --radius-modal: 24px;
+  --radius-bar: 4px;
+  
+  /* Legacy support for shadcn */
+  --background: #FAFAFA;
+  --foreground: #1A1A1A;
+  --card: #FFFFFF;
+  --card-foreground: #1A1A1A;
+  --popover: #FFFFFF;
+  --popover-foreground: #1A1A1A;
+  --primary: #F59E0B;
+  --primary-foreground: #FFFFFF;
+  --secondary: #F0F0F0;
+  --secondary-foreground: #1A1A1A;
+  --muted: #F0F0F0;
+  --muted-foreground: #525252;
+  --accent: #F59E0B;
+  --accent-foreground: #FFFFFF;
+  --destructive: #DC2626;
+  --border: #E0E0E0;
+  --input: #E0E0E0;
+  --ring: #F59E0B;
+  --radius: 14px;
+}
+
+.dark {
+  /* Dark mode variant */
+  --base: #0A0A0A;
+  --surface: #141414;
+  --raised: #1E1E1E;
+  --border: #2A2A2A;
+  --text-primary: #F0F0F0;
+  --text-secondary: #808080;
+  --text-muted: #404040;
+  --accent-yellow: #E8FF47;
+  --accent-red: #FF4444;
+  --accent-green: #44FF88;
+  --shadow-brutal: 4px 4px 0px #000000;
+  --shadow-brutal-hover: 5px 5px 0px #000000;
+  --shadow-brutal-active: 0px 0px 0px #000000;
+  --background: #0A0A0A;
+  --foreground: #F0F0F0;
+  --card: #141414;
+  --card-foreground: #F0F0F0;
+  --popover: #141414;
+  --popover-foreground: #F0F0F0;
+  --primary: #E8FF47;
+  --primary-foreground: #000000;
+  --secondary: #1E1E1E;
+  --secondary-foreground: #F0F0F0;
+  --muted: #1E1E1E;
+  --muted-foreground: #808080;
+  --accent: #E8FF47;
+  --accent-foreground: #000000;
+  --destructive: #FF4444;
+  --border: #2A2A2A;
+  --input: #2A2A2A;
+  --ring: #E8FF47;
+}
+
+@theme inline {
+  /* Typography - Space Grotesk for body, JetBrains Mono for numbers */
+  --font-sans: var(--font-space-grotesk), "Space Grotesk", "Outfit", system-ui, sans-serif;
+  --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", monospace;
+  
+  /* Custom colors for Tailwind */
+  --color-base: var(--base);
+  --color-surface: var(--surface);
+  --color-raised: var(--raised);
+  --color-border: var(--border);
+  --color-text-primary: var(--text-primary);
+  --color-text-secondary: var(--text-secondary);
+  --color-text-muted: var(--text-muted);
+  --color-accent-yellow: var(--accent-yellow);
+  --color-accent-red: var(--accent-red);
+  --color-accent-green: var(--accent-green);
+  
+  /* Legacy shadcn support */
+  --color-background: var(--background);
+  --color-foreground: var(--foreground);
+  --color-card: var(--card);
+  --color-card-foreground: var(--card-foreground);
+  --color-popover: var(--popover);
+  --color-popover-foreground: var(--popover-foreground);
+  --color-primary: var(--primary);
+  --color-primary-foreground: var(--primary-foreground);
+  --color-secondary: var(--secondary);
+  --color-secondary-foreground: var(--secondary-foreground);
+  --color-muted: var(--muted);
+  --color-muted-foreground: var(--muted-foreground);
+  --color-accent: var(--accent);
+  --color-accent-foreground: var(--accent-foreground);
+  --color-destructive: var(--destructive);
+  --color-input: var(--input);
+  --color-ring: var(--ring);
+  
+  /* Border radius */
+  --radius-sm: 10px;
+  --radius-md: 12px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 24px;
+}
+
+@layer base {
+  * {
+    @apply border-border;
+  }
+  
+  body {
+    @apply font-sans antialiased;
+    background-color: var(--base);
+    color: var(--text-primary);
+  }
+  
+  html {
+    @apply font-sans;
+    background-color: var(--base);
+  }
+  
+  /* Light themed scrollbar */
+  ::-webkit-scrollbar {
+    width: 6px;
+  }
+  
+  ::-webkit-scrollbar-track {
+    background: var(--raised);
+  }
+  
+  ::-webkit-scrollbar-thumb {
+    background: var(--border);
+    border-radius: 3px;
+  }
+}
+
+@layer components {
+  /* 
+   * BUTTONS
+   * Border 1px, radius 14px, hard shadow 4px 4px 0px
+   * Hover: shadow 5px 5px, lift -1px
+   * Active: shadow 0px 0px, sink +3px
+   * Transition: 75ms ease
+   */
+  .btn-press {
+    transition: all 75ms ease;
+    box-shadow: var(--shadow-brutal);
+  }
+  
+  .btn-press:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-brutal-hover);
+  }
+  
+  .btn-press:active {
+    transform: translateY(3px);
+    box-shadow: var(--shadow-brutal-active);
+  }
+  
+  /* 
+   * CARDS
+   * Background white, border, radius 20px
+   * NO shadow. Padding 20px.
+   */
+  .card {
+    background-color: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-card);
+    padding: 20px;
+  }
+  
+  /* 
+   * SECTION LABELS
+   * Monospace, uppercase, tracking wide, secondary color
+   */
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    text-transform: uppercase;
+    letter-spacing: 0.1em;
+    color: var(--text-secondary);
+    display: block;
+  }
+  
+  /* 
+   * INTERACTIVE ROWS
+   * Hover: bg shifts to raised, left border 3px solid accent
+   * Cursor pointer, transition 100ms
+   */
+  .row-interactive {
+    cursor: pointer;
+    transition: all 100ms ease;
+    border-left: 3px solid transparent;
+  }
+  
+  .row-interactive:hover {
+    background-color: var(--raised);
+    border-left-color: var(--accent-yellow);
+  }
+  
+  /* 
+   * TAG/PILL BUTTONS
+   * Inactive: bg raised, border
+   * Selected: bg accent, text dark, border accent, press shadow
+   * Unselectable: opacity 40%
+   */
+  .tag-pill {
+    background-color: var(--raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+    transition: all 75ms ease;
+    box-shadow: var(--shadow-brutal);
+  }
+  
+  .tag-pill:hover:not(.tag-pill-disabled) {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-brutal-hover);
+  }
+  
+  .tag-pill:active:not(.tag-pill-disabled) {
+    transform: translateY(3px);
+    box-shadow: var(--shadow-brutal-active);
+  }
+  
+  .tag-pill-selected {
+    background-color: var(--accent-yellow);
+    color: #FFFFFF;
+    border-color: var(--accent-yellow);
+    transform: translateY(3px);
+    box-shadow: var(--shadow-brutal-active);
+  }
+  
+  .tag-pill-selected:hover {
+    transform: translateY(3px);
+    box-shadow: var(--shadow-brutal-active);
+  }
+  
+  .tag-pill-disabled {
+    opacity: 0.4;
+    pointer-events: none;
+  }
+  
+  /* 
+   * PROGRESS/FLAVOR BARS
+   * Track: raised, fill: accent
+   * Height 8px, radius 4px
+   * Animate from 0 over 600ms, 80ms stagger
+   */
+  .flavor-bar-track {
+    background-color: var(--raised);
+    height: 8px;
+    border-radius: var(--radius-bar);
+    overflow: hidden;
+  }
+  
+  .flavor-bar-fill {
+    background-color: var(--accent-yellow);
+    height: 100%;
+    border-radius: var(--radius-bar);
+    transition: width 600ms ease-out;
+  }
+  
+  @keyframes flavor-bar-fill {
+    from {
+      width: 0%;
+    }
+  }
+  
+  .flavor-bar-animate {
+    animation: flavor-bar-fill 600ms ease-out forwards;
+  }
+  
+  /* 
+   * MODALS
+   * Centered, card treatment, radius 24px
+   * Backdrop: rgba(0,0,0,0.5) for light mode
+   * Slide-up animation 300ms ease-out
+   */
+  .modal-backdrop {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+  
+  @keyframes slide-up {
+    from {
+      transform: translateY(100%);
+      opacity: 0;
+    }
+    to {
+      transform: translateY(0);
+      opacity: 1;
+    }
+  }
+  
+  .animate-slide-up {
+    animation: slide-up 300ms ease-out forwards;
+  }
+  
+  @keyframes fade-in {
+    from {
+      opacity: 0;
+    }
+    to {
+      opacity: 1;
+    }
+  }
+  
+  .animate-fade-in {
+    animation: fade-in 200ms ease-out forwards;
+  }
+  
+  /* 
+   * INPUT FIELDS
+   * Background raised, border, radius 14px
+   * Focus: yellow border accent
+   */
+  .input-brutal {
+    background-color: var(--raised);
+    border: 1px solid var(--border);
+    border-radius: var(--radius-button);
+    color: var(--text-primary);
+    padding: 12px 16px;
+    transition: border-color 100ms ease;
+  }
+  
+  .input-brutal::placeholder {
+    color: var(--text-muted);
+  }
+  
+  .input-brutal:focus {
+    outline: none;
+    border-color: var(--accent-yellow);
+  }
+
+  /*
+   * FLOATING ACTION BUTTON
+   * Fixed at bottom, no background blur
+   * Solid background with padding
+   */
+  .floating-action {
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 16px;
+    padding-bottom: calc(16px + env(safe-area-inset-bottom));
+    background-color: var(--base);
+    z-index: 40;
+  }
+
+  .floating-action-inner {
+    max-width: 32rem;
+    margin-left: auto;
+    margin-right: auto;
+  }
+}
+
+@layer utilities {
+  /* Monospace for numbers, phone numbers, scores, data values */
+  .font-mono-numbers {
+    font-family: var(--font-mono);
+    font-variant-numeric: tabular-nums;
+  }
+  
+  /* 4px grid spacing helpers */
+  .gap-grid {
+    gap: 4px;
+  }
+  
+  .gap-grid-2 {
+    gap: 8px;
+  }
+  
+  .gap-grid-3 {
+    gap: 12px;
+  }
+  
+  .gap-grid-4 {
+    gap: 16px;
+  }
+  
+  .gap-grid-5 {
+    gap: 20px;
+  }
+}
