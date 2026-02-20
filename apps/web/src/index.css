@@ -1,15 +1,14 @@
 @import "tailwindcss";
 @import "tw-animate-css";
 
-@custom-variant dark (&:is(.dark *));
-
 /* 
  * NEO-BRUTALIST LIGHT UI DESIGN SYSTEM
  * ====================================
  * Base palette: warm whites and grays
- * Single accent: electric yellow #E8FF47
+ * Single accent: amber #F59E0B
  * Hard offset shadows on interactive elements only
  * Consistent 4px grid spacing
+ * LIGHT MODE ONLY - no dark theme
  */
 
 :root {
@@ -29,7 +28,7 @@
   --accent-red: #DC2626;     /* Heat/danger states only */
   --accent-green: #16A34A;   /* Success/mild states only */
   
-  /* Hard offset shadows - darker for light mode */
+  /* Hard offset shadows */
   --shadow-brutal: 4px 4px 0px #1A1A1A;
   --shadow-brutal-hover: 5px 5px 0px #1A1A1A;
   --shadow-brutal-active: 0px 0px 0px #1A1A1A;
@@ -60,41 +59,6 @@
   --input: #E0E0E0;
   --ring: #F59E0B;
   --radius: 14px;
-}
-
-.dark {
-  /* Dark mode variant */
-  --base: #0A0A0A;
-  --surface: #141414;
-  --raised: #1E1E1E;
-  --border: #2A2A2A;
-  --text-primary: #F0F0F0;
-  --text-secondary: #808080;
-  --text-muted: #404040;
-  --accent-yellow: #E8FF47;
-  --accent-red: #FF4444;
-  --accent-green: #44FF88;
-  --shadow-brutal: 4px 4px 0px #000000;
-  --shadow-brutal-hover: 5px 5px 0px #000000;
-  --shadow-brutal-active: 0px 0px 0px #000000;
-  --background: #0A0A0A;
-  --foreground: #F0F0F0;
-  --card: #141414;
-  --card-foreground: #F0F0F0;
-  --popover: #141414;
-  --popover-foreground: #F0F0F0;
-  --primary: #E8FF47;
-  --primary-foreground: #000000;
-  --secondary: #1E1E1E;
-  --secondary-foreground: #F0F0F0;
-  --muted: #1E1E1E;
-  --muted-foreground: #808080;
-  --accent: #E8FF47;
-  --accent-foreground: #000000;
-  --destructive: #FF4444;
-  --border: #2A2A2A;
-  --input: #2A2A2A;
-  --ring: #E8FF47;
 }
 
 @theme inline {
