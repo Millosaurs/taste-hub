@@ -18,7 +18,7 @@ const jetbrainsMono = JetBrains_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Taste Hub",
+  title: "tastefr",
   description: "Know your palate - Digital Taste Management System",
 };
 
@@ -28,7 +28,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
+    <html lang="en" suppressHydrationWarning style={{ colorScheme: 'light' }}>
       <body className={`${spaceGrotesk.variable} ${jetbrainsMono.variable} antialiased`}>
         <Providers>
           {children}

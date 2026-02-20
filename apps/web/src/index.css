@@ -21,7 +21,7 @@
   /* Text colors */
   --text-primary: #1A1A1A;
   --text-secondary: #525252;
-  --text-muted: #9CA3AF;
+  --text-muted: #6B7280;
   
   /* Accent colors - use sparingly */
   --accent-yellow: #F59E0B;  /* Amber - better contrast for light mode */
@@ -66,36 +66,37 @@
   --font-sans: var(--font-space-grotesk), "Space Grotesk", "Outfit", system-ui, sans-serif;
   --font-mono: var(--font-jetbrains-mono), "JetBrains Mono", "Fira Code", monospace;
   
-  /* Custom colors for Tailwind */
-  --color-base: var(--base);
-  --color-surface: var(--surface);
-  --color-raised: var(--raised);
-  --color-border: var(--border);
-  --color-text-primary: var(--text-primary);
-  --color-text-secondary: var(--text-secondary);
-  --color-text-muted: var(--text-muted);
-  --color-accent-yellow: var(--accent-yellow);
-  --color-accent-red: var(--accent-red);
-  --color-accent-green: var(--accent-green);
+  /* Custom colors for Tailwind - using direct hex values to avoid compile-time issues */
+  /* Note: Using 'canvas' instead of 'base' to avoid conflict with Tailwind's text-base utility */
+  --color-canvas: #FAFAFA;
+  --color-surface: #FFFFFF;
+  --color-raised: #F0F0F0;
+  --color-border: #E0E0E0;
+  --color-text-primary: #1A1A1A;
+  --color-text-secondary: #525252;
+  --color-text-muted: #6B7280;
+  --color-accent-yellow: #F59E0B;
+  --color-accent-red: #DC2626;
+  --color-accent-green: #16A34A;
   
-  /* Legacy shadcn support */
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --color-card: var(--card);
-  --color-card-foreground: var(--card-foreground);
-  --color-popover: var(--popover);
-  --color-popover-foreground: var(--popover-foreground);
-  --color-primary: var(--primary);
-  --color-primary-foreground: var(--primary-foreground);
-  --color-secondary: var(--secondary);
-  --color-secondary-foreground: var(--secondary-foreground);
-  --color-muted: var(--muted);
-  --color-muted-foreground: var(--muted-foreground);
-  --color-accent: var(--accent);
-  --color-accent-foreground: var(--accent-foreground);
-  --color-destructive: var(--destructive);
-  --color-input: var(--input);
-  --color-ring: var(--ring);
+  /* Legacy shadcn support - using direct hex values */
+  --color-background: #FAFAFA;
+  --color-foreground: #1A1A1A;
+  --color-card: #FFFFFF;
+  --color-card-foreground: #1A1A1A;
+  --color-popover: #FFFFFF;
+  --color-popover-foreground: #1A1A1A;
+  --color-primary: #F59E0B;
+  --color-primary-foreground: #FFFFFF;
+  --color-secondary: #F0F0F0;
+  --color-secondary-foreground: #1A1A1A;
+  --color-muted: #F0F0F0;
+  --color-muted-foreground: #6B7280;
+  --color-accent: #F59E0B;
+  --color-accent-foreground: #FFFFFF;
+  --color-destructive: #DC2626;
+  --color-input: #E0E0E0;
+  --color-ring: #F59E0B;
   
   /* Border radius */
   --radius-sm: 10px;
@@ -121,18 +122,14 @@
     background-color: var(--base);
   }
   
-  /* Light themed scrollbar */
+  /* Hide scrollbar */
   ::-webkit-scrollbar {
-    width: 6px;
+    display: none;
   }
   
-  ::-webkit-scrollbar-track {
-    background: var(--raised);
-  }
-  
-  ::-webkit-scrollbar-thumb {
-    background: var(--border);
-    border-radius: 3px;
+  * {
+    -ms-overflow-style: none;
+    scrollbar-width: none;
   }
 }
 

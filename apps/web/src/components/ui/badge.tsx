@@ -1,39 +1,7 @@
 import { cn } from "@/lib/utils";
-import {
-  Flame,
-  Candy,
-  Leaf,
-  Citrus,
-  Beef,
-  Sparkles,
-  Scale,
-  Search,
-  Salad,
-  Coffee,
-  Heart,
-  type LucideIcon,
-} from "lucide-react";
-
-// Map category labels to icons
-const CATEGORY_ICONS: Record<string, LucideIcon> = {
-  "HEAT SEEKER": Flame,
-  "SWEET TOOTH": Candy,
-  "HERB LOVER": Leaf,
-  "CITRUS FAN": Citrus,
-  "UMAMI HUNTER": Beef,
-  "FLAVOR EXPLORER": Sparkles,
-  "BALANCED PALATE": Scale,
-  "STILL DISCOVERING": Search,
-  "FRESH ENTHUSIAST": Salad,
-  "BOLD & BITTER": Coffee,
-  "COMFORT CRAVER": Heart,
-};
-
-// Fallback icon
-const DEFAULT_ICON = Search;
 
 interface BadgeProps {
-  icon?: LucideIcon;
+  emoji?: string;
   label: string;
   size?: "sm" | "md" | "lg";
   variant?: "default" | "selected" | "muted";
@@ -41,7 +9,7 @@ interface BadgeProps {
 }
 
 export function Badge({
-  icon: Icon,
+  emoji,
   label,
   size = "md",
   variant = "default",
@@ -51,12 +19,6 @@ export function Badge({
     sm: "px-2 py-1 text-xs gap-1",
     md: "px-3 py-1.5 text-sm gap-1.5",
     lg: "px-4 py-2 text-base gap-2",
-  };
-
-  const iconSizes = {
-    sm: "w-3 h-3",
-    md: "w-4 h-4",
-    lg: "w-5 h-5",
   };
 
   const variantClasses = {
@@ -74,77 +36,43 @@ export function Badge({
         className
       )}
     >
-      {Icon && <Icon className={iconSizes[size]} />}
+      {emoji && <span>{emoji}</span>}
       <span>{label}</span>
     </span>
   );
 }
 
 interface CategoryBadgeProps {
-  category: string;
+  emoji: string;
+  label: string;
   size?: "sm" | "md" | "lg";
   className?: string;
 }
 
-export function CategoryBadge({ category, size = "md", className }: CategoryBadgeProps) {
+export function CategoryBadge({ emoji, label, size = "md", className }: CategoryBadgeProps) {
   const sizeClasses = {
     sm: "text-sm",
     md: "text-base",
     lg: "text-lg",
   };
 
-  const iconSizeClasses = {
-    sm: "w-6 h-6",
-    md: "w-8 h-8",
-    lg: "w-12 h-12",
+  const emojiSizeClasses = {
+    sm: "text-lg",
+    md: "text-2xl",
+    lg: "text-4xl",
   };
-
-  // Get the icon for this category, or use the default
-  const Icon = CATEGORY_ICONS[category.toUpperCase()] ?? DEFAULT_ICON;
 
   return (
     <div className={cn("flex flex-col items-center gap-2", className)}>
-      <div className="p-3 bg-accent-yellow/10 rounded-full">
-        <Icon className={cn(iconSizeClasses[size], "text-accent-yellow")} strokeWidth={2} />
-      </div>
+      <span className={emojiSizeClasses[size]}>{emoji}</span>
       <span
         className={cn(
           "font-bold uppercase tracking-wider text-text-primary",
           sizeClasses[size]
         )}
       >
-        {category}
+        {label}
       </span>
     </div>
   );
 }
-
-// Taste tag types and their icons
-type TasteTag = "purist" | "heat" | "citrus" | "sweet" | "herby" | "savory";
-
-const TASTE_TAG_CONFIG: Record<TasteTag, { icon: LucideIcon; label: string }> = {
-  purist: { icon: Sparkles, label: "Purist" },
-  heat: { icon: Flame, label: "Heat" },
-  citrus: { icon: Citrus, label: "Citrus" },
-  sweet: { icon: Candy, label: "Sweet" },
-  herby: { icon: Leaf, label: "Herby" },
-  savory: { icon: Beef, label: "Savory" },
-};
-
-interface TasteTagBadgeProps {
-  tag: TasteTag;
-  size?: "sm" | "md";
-}
-
-export function TasteTagBadge({ tag, size = "sm" }: TasteTagBadgeProps) {
-  const config = TASTE_TAG_CONFIG[tag];
-  return (
-    <Badge
-      icon={config.icon}
-      label={config.label}
-      size={size}
-    />
-  );
-}
-
-export { TASTE_TAG_CONFIG, type TasteTag };

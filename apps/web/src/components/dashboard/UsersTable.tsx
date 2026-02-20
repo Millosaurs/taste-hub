@@ -2,9 +2,8 @@
 
 import { useState, useMemo } from "react";
 import type { ProfileWithUser } from "@idt-shit/api";
-import { CategoryBadge } from "@/components/ui/badge";
+import { Badge } from "@/components/ui/badge";
 import { cn } from "@/lib/utils";
-import { X, Search } from "lucide-react";
 
 interface UsersTableProps {
   profiles: ProfileWithUser[];
@@ -42,14 +41,13 @@ export function UsersTable({ profiles, onSelectUser }: UsersTableProps) {
     <div className="space-y-3 sm:space-y-4">
       {/* Search input */}
       <div className="relative">
-        <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-text-muted" />
         <input
           type="text"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
           placeholder="Search by name or phone..."
           className={cn(
-            "w-full bg-raised border border-border rounded-[14px] pl-10 pr-10 py-2.5 sm:py-3",
+            "w-full bg-raised border border-border rounded-[14px] px-3 sm:px-4 py-2.5 sm:py-3",
             "text-sm text-text-primary placeholder:text-text-muted",
             "focus:outline-none focus:border-accent-yellow"
           )}
@@ -60,7 +58,7 @@ export function UsersTable({ profiles, onSelectUser }: UsersTableProps) {
             onClick={() => setSearch("")}
             className="absolute right-3 top-1/2 -translate-y-1/2 text-text-muted hover:text-text-primary"
           >
-            <X className="w-4 h-4" />
+            ✕
           </button>
         )}
       </div>
@@ -89,8 +87,12 @@ export function UsersTable({ profiles, onSelectUser }: UsersTableProps) {
                     {maskPhone(profile.user.phone_number)}
                   </p>
                 </div>
-                <div className="text-xs text-text-secondary font-medium uppercase">
-                  {profile.category_label ?? "NEW"}
+                <div className="flex items-center gap-2">
+                  <Badge
+                    emoji={profile.category_emoji ?? "🔍"}
+                    label={profile.category_label ?? "NEW"}
+                    size="sm"
+                  />
                 </div>
               </div>
               <div className="flex items-center gap-4 mt-2 pt-2 border-t border-border">
@@ -157,9 +159,11 @@ export function UsersTable({ profiles, onSelectUser }: UsersTableProps) {
                       </span>
                     </td>
                     <td className="px-4 py-3">
-                      <span className="text-sm font-medium text-text-primary">
-                        {profile.category_label ?? "DISCOVERING"}
-                      </span>
+                      <Badge
+                        emoji={profile.category_emoji ?? "🔍"}
+                        label={profile.category_label ?? "DISCOVERING"}
+                        size="sm"
+                      />
                     </td>
                     <td className="px-4 py-3 text-center">
                       <span className="font-mono-numbers text-text-primary">

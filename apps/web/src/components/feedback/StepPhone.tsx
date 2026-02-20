@@ -75,10 +75,10 @@ export function StepPhone() {
     <div className="flex flex-col items-center justify-center min-h-svh px-4 py-8">
       {/* Welcome flash message */}
       {welcomeMessage && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center bg-base/95 animate-fade-in">
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-white/80 backdrop-blur-md animate-fade-in">
           <div className="text-center px-4">
-            <p className="text-3xl sm:text-4xl mb-2">👋</p>
-            <h2 className="text-xl sm:text-2xl font-bold text-text-primary">{welcomeMessage}</h2>
+            <p className="text-4xl sm:text-5xl mb-3">👋</p>
+            <h2 className="text-2xl sm:text-3xl font-bold text-text-primary">{welcomeMessage}</h2>
           </div>
         </div>
       )}

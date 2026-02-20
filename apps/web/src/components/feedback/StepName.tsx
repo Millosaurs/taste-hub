@@ -7,24 +7,14 @@ import { useFeedbackStore } from "@/store/feedbackStore";
 import { client } from "@/utils/orpc";
 import { cn } from "@/lib/utils";
 import type { TasteTag } from "@idt-shit/db";
-import {
-  Sparkles,
-  Flame,
-  Citrus,
-  Candy,
-  Leaf,
-  Beef,
-  ArrowRight,
-  type LucideIcon,
-} from "lucide-react";
 
-const TASTE_TAGS: Array<{ key: TasteTag; icon: LucideIcon; label: string }> = [
-  { key: "purist", icon: Sparkles, label: "The Purist" },
-  { key: "heat", icon: Flame, label: "Heat Seeker" },
-  { key: "citrus", icon: Citrus, label: "Citrus & Bright" },
-  { key: "sweet", icon: Candy, label: "Sweet Tooth" },
-  { key: "herby", icon: Leaf, label: "Herby & Earthy" },
-  { key: "savory", icon: Beef, label: "Bold & Savory" },
+const TASTE_TAGS: Array<{ key: TasteTag; emoji: string; label: string }> = [
+  { key: "purist", emoji: "🤍", label: "The Purist" },
+  { key: "heat", emoji: "🌶", label: "Heat Seeker" },
+  { key: "citrus", emoji: "🍋", label: "Citrus & Bright" },
+  { key: "sweet", emoji: "🍯", label: "Sweet Tooth" },
+  { key: "herby", emoji: "🌿", label: "Herby & Earthy" },
+  { key: "savory", emoji: "🧄", label: "Bold & Savory" },
 ];
 
 export function StepName() {
@@ -120,7 +110,6 @@ export function StepName() {
             {TASTE_TAGS.map((tag) => {
               const isSelected = selectedTags.includes(tag.key);
               const isDisabled = !isSelected && selectedTags.length >= 3;
-              const Icon = tag.icon;
 
               return (
                 <button
@@ -135,7 +124,7 @@ export function StepName() {
                     isDisabled && "opacity-40 pointer-events-none"
                   )}
                 >
-                  <Icon className="w-6 h-6 sm:w-7 sm:h-7" strokeWidth={2} />
+                  <span className="text-xl sm:text-2xl">{tag.emoji}</span>
                   <span className="text-[10px] sm:text-xs font-medium text-center leading-tight">
                     {tag.label}
                   </span>
@@ -155,12 +144,11 @@ export function StepName() {
           type="submit"
           variant="primary"
           size="xl"
-          className="w-full flex items-center justify-center gap-2"
+          className="w-full"
           loading={loading}
           disabled={name.trim().length < 2 || selectedTags.length === 0}
         >
-          LET'S GO
-          <ArrowRight className="w-5 h-5" />
+          LET'S GO →
         </Button>
       </form>
     </BottomSheet>

@@ -3,12 +3,11 @@
 import { useEffect, useState } from "react";
 import Image from "next/image";
 import type { ProfileWithUser, FeedbackEntryWithDish } from "@idt-shit/api";
-import type { FlavorProfile } from "@idt-shit/db";
+import type { FlavorProfile, TasteTag } from "@idt-shit/db";
 import { Modal } from "@/components/ui/modal";
 import { FlavorBar, ProgressBar } from "@/components/ui/progress-bar";
-import { CategoryBadge, TasteTagBadge, type TasteTag } from "@/components/ui/badge";
+import { CategoryBadge, Badge } from "@/components/ui/badge";
 import { client } from "@/utils/orpc";
-import { X, Heart, HeartCrack, UtensilsCrossed } from "lucide-react";
 
 interface ProfileModalProps {
   profile: ProfileWithUser | null;
@@ -23,6 +22,15 @@ const FLAVOR_LABELS: Array<{ key: keyof FlavorProfile; label: string }> = [
   { key: "bitter", label: "Bitter" },
   { key: "umami", label: "Umami" },
 ];
+
+const TASTE_TAG_LABELS: Record<TasteTag, { emoji: string; label: string }> = {
+  purist: { emoji: "🤍", label: "Purist" },
+  heat: { emoji: "🌶", label: "Heat" },
+  citrus: { emoji: "🍋", label: "Citrus" },
+  sweet: { emoji: "🍯", label: "Sweet" },
+  herby: { emoji: "🌿", label: "Herby" },
+  savory: { emoji: "🧄", label: "Savory" },
+};
 
 export function ProfileModal({ profile, onClose }: ProfileModalProps) {
   const [orderHistory, setOrderHistory] = useState<FeedbackEntryWithDish[]>([]);
@@ -97,10 +105,10 @@ export function ProfileModal({ profile, onClose }: ProfileModalProps) {
       <button
         type="button"
         onClick={onClose}
-        className="absolute top-3 sm:top-4 right-3 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-raised hover:bg-border text-text-secondary hover:text-text-primary transition-colors"
+        className="absolute top-3 sm:top-4 right-3 sm:right-4 w-7 h-7 sm:w-8 sm:h-8 flex items-center justify-center rounded-full bg-raised hover:bg-border text-text-secondary hover:text-text-primary transition-colors text-sm"
         aria-label="Close"
       >
-        <X className="w-4 h-4" />
+        ✕
       </button>
 
       <div className="space-y-4 sm:space-y-6 pt-2">
@@ -114,7 +122,8 @@ export function ProfileModal({ profile, onClose }: ProfileModalProps) {
 
         {/* Category badge */}
         <CategoryBadge
-          category={profile.category_label ?? "STILL DISCOVERING"}
+          emoji={profile.category_emoji ?? "🔍"}
+          label={profile.category_label ?? "STILL DISCOVERING"}
           size="md"
         />
 
@@ -175,8 +184,8 @@ export function ProfileModal({ profile, onClose }: ProfileModalProps) {
                         sizes="64px"
                       />
                     ) : (
-                      <div className="absolute inset-0 flex items-center justify-center">
-                        <UtensilsCrossed className="w-6 h-6 text-text-muted" />
+                      <div className="absolute inset-0 flex items-center justify-center text-xl">
+                        🍽️
                       </div>
                     )}
                   </div>
@@ -217,8 +226,8 @@ export function ProfileModal({ profile, onClose }: ProfileModalProps) {
                       />
                     </div>
                   ) : (
-                    <div className="w-8 h-8 rounded-full bg-border flex items-center justify-center flex-shrink-0">
-                      <UtensilsCrossed className="w-4 h-4 text-text-muted" />
+                    <div className="w-8 h-8 rounded-full bg-border flex items-center justify-center text-sm flex-shrink-0">
+                      🍽️
                     </div>
                   )}
                   <div className="flex-1 min-w-0">
@@ -231,10 +240,10 @@ export function ProfileModal({ profile, onClose }: ProfileModalProps) {
                   </div>
                   <div className="flex-shrink-0">
                     {entry.liked_overall === true && (
-                      <Heart className="w-4 h-4 text-accent-green" />
+                      <span className="text-sm">😍</span>
                     )}
                     {entry.liked_overall === false && (
-                      <HeartCrack className="w-4 h-4 text-accent-red" />
+                      <span className="text-sm">😞</span>
                     )}
                   </div>
                 </div>
@@ -259,9 +268,17 @@ export function ProfileModal({ profile, onClose }: ProfileModalProps) {
               Self-declared
             </p>
             <div className="flex flex-wrap justify-center gap-1.5 sm:gap-2">
-              {tasteTags.map((tag) => (
-                <TasteTagBadge key={tag} tag={tag} size="sm" />
-              ))}
+              {tasteTags.map((tag) => {
+                const tagInfo = TASTE_TAG_LABELS[tag];
+                return (
+                  <Badge
+                    key={tag}
+                    emoji={tagInfo.emoji}
+                    label={tagInfo.label}
+                    size="sm"
+                  />
+                );
+              })}
             </div>
           </div>
         )}

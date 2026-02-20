@@ -6,59 +6,45 @@ import { Button } from "@/components/ui/button";
 import { useFeedbackStore } from "@/store/feedbackStore";
 import { client } from "@/utils/orpc";
 import { cn } from "@/lib/utils";
-import {
-  Heart,
-  HeartCrack,
-  Snowflake,
-  Check,
-  Flame,
-  Minus,
-  Candy,
-  CircleDot,
-  ThumbsDown,
-  ThumbsUp,
-  Sparkles,
-} from "lucide-react";
-import type { LucideIcon } from "lucide-react";
 
 type RatingOption<T> = {
   value: T;
   label: string;
-  icon: LucideIcon;
+  emoji?: string;
 };
 
 const OVERALL_OPTIONS: RatingOption<boolean>[] = [
-  { value: true, label: "Loved it", icon: Heart },
-  { value: false, label: "Didn't like", icon: HeartCrack },
+  { value: true, label: "Loved it", emoji: "😍" },
+  { value: false, label: "Didn't like", emoji: "😞" },
 ];
 
 const SPICE_OPTIONS: RatingOption<"too_mild" | "just_right" | "too_hot">[] = [
-  { value: "too_mild", label: "Mild", icon: Snowflake },
-  { value: "just_right", label: "Perfect", icon: Check },
-  { value: "too_hot", label: "Hot", icon: Flame },
+  { value: "too_mild", label: "Mild", emoji: "🥶" },
+  { value: "just_right", label: "Perfect", emoji: "✅" },
+  { value: "too_hot", label: "Hot", emoji: "🔥" },
 ];
 
 const SWEET_OPTIONS: RatingOption<"not_sweet" | "just_right" | "too_sweet">[] = [
-  { value: "not_sweet", label: "Less", icon: Minus },
-  { value: "just_right", label: "Perfect", icon: Check },
-  { value: "too_sweet", label: "More", icon: Candy },
+  { value: "not_sweet", label: "Less", emoji: "😐" },
+  { value: "just_right", label: "Perfect", emoji: "✅" },
+  { value: "too_sweet", label: "More", emoji: "🍬" },
 ];
 
 const SALT_OPTIONS: RatingOption<"bland" | "just_right" | "too_salty">[] = [
-  { value: "bland", label: "Bland", icon: CircleDot },
-  { value: "just_right", label: "Perfect", icon: Check },
-  { value: "too_salty", label: "Salty", icon: Sparkles },
+  { value: "bland", label: "Bland", emoji: "😶" },
+  { value: "just_right", label: "Perfect", emoji: "✅" },
+  { value: "too_salty", label: "Salty", emoji: "🧂" },
 ];
 
 const TEXTURE_OPTIONS: RatingOption<"bad" | "okay" | "great">[] = [
-  { value: "bad", label: "Bad", icon: ThumbsDown },
-  { value: "okay", label: "Okay", icon: Check },
-  { value: "great", label: "Great", icon: ThumbsUp },
+  { value: "bad", label: "Bad", emoji: "👎" },
+  { value: "okay", label: "Okay", emoji: "👍" },
+  { value: "great", label: "Great", emoji: "🙌" },
 ];
 
 const ORDER_AGAIN_OPTIONS: RatingOption<boolean>[] = [
-  { value: true, label: "Yes!", icon: ThumbsUp },
-  { value: false, label: "No", icon: ThumbsDown },
+  { value: true, label: "Yes!", emoji: "👍" },
+  { value: false, label: "No", emoji: "👎" },
 ];
 
 interface RatingRowProps<T> {
@@ -70,31 +56,30 @@ interface RatingRowProps<T> {
 
 function RatingRow<T>({ label, options, value, onChange }: RatingRowProps<T>) {
   return (
-    <div className="bg-surface border border-border rounded-xl sm:rounded-[20px] p-2.5 sm:p-4 space-y-2 sm:space-y-3">
-      <span className="section-label text-[10px] sm:text-xs">{label}</span>
+    <div className="bg-surface border border-border rounded-[20px] p-3 sm:p-4 space-y-2.5 sm:space-y-3">
+      <span className="section-label text-xs">{label}</span>
       <div className={cn(
-        "grid gap-1.5 sm:gap-2",
+        "grid gap-2 sm:gap-2",
         options.length === 2 ? "grid-cols-2" : "grid-cols-3"
       )}>
         {options.map((option) => {
           const isSelected = value === option.value;
-          const Icon = option.icon;
           return (
             <button
               key={String(option.value)}
               type="button"
               onClick={() => onChange(option.value)}
               className={cn(
-                "flex flex-col sm:flex-row items-center justify-center gap-0.5 sm:gap-1.5",
-                "py-2.5 sm:py-3 px-1.5 sm:px-3 rounded-xl sm:rounded-[14px] border",
-                "text-[10px] sm:text-sm font-medium transition-all duration-75",
+                "flex flex-col items-center justify-center gap-1 sm:gap-1.5",
+                "py-3 sm:py-3 px-2 sm:px-3 rounded-[14px] border",
+                "text-xs sm:text-sm font-medium transition-all duration-75",
                 "active:scale-[0.97]",
                 isSelected
-                  ? "bg-accent-yellow text-white border-accent-yellow shadow-none translate-y-[2px] sm:translate-y-[3px]"
-                  : "bg-raised text-text-primary border-border shadow-[2px_2px_0px_#1A1A1A] sm:shadow-[4px_4px_0px_#1A1A1A] active:translate-y-[2px] active:shadow-none"
+                  ? "bg-accent-yellow text-white border-accent-yellow shadow-none translate-y-[3px]"
+                  : "bg-raised text-text-primary border-border shadow-[3px_3px_0px_#1A1A1A] sm:shadow-[4px_4px_0px_#1A1A1A] active:translate-y-[3px] active:shadow-none"
               )}
             >
-              <Icon className="w-4 h-4 sm:w-5 sm:h-5" strokeWidth={2.5} />
+              {option.emoji && <span className="text-2xl sm:text-xl">{option.emoji}</span>}
               <span className="leading-tight">{option.label}</span>
             </button>
           );
@@ -190,15 +175,15 @@ export function StepTasteButtons() {
     : "your meal";
 
   return (
-    <div className="min-h-svh bg-base pb-24 sm:pb-28">
-      <div className="max-w-lg mx-auto px-3 sm:px-4 py-4 sm:py-6 space-y-2.5 sm:space-y-4">
+    <div className="min-h-svh bg-canvas pb-24 sm:pb-28">
+      <div className="max-w-lg mx-auto px-4 py-5 sm:py-6 space-y-3 sm:space-y-4">
         {/* Header */}
         <div className="text-center space-y-1">
-          <h1 className="text-lg sm:text-2xl font-bold text-text-primary">
+          <h1 className="text-xl sm:text-2xl font-bold text-text-primary">
             How was {dishNames}?
           </h1>
           {isReturning && user && (
-            <p className="text-text-secondary text-xs sm:text-sm">
+            <p className="text-text-secondary text-sm">
               Let's refine your taste profile!
             </p>
           )}
@@ -206,14 +191,14 @@ export function StepTasteButtons() {
 
         {/* Selected dishes preview - horizontal scroll */}
         {selectedDishes.length > 0 && (
-          <div className="flex gap-1.5 sm:gap-2 overflow-x-auto pb-1 -mx-3 px-3 sm:-mx-4 sm:px-4 scrollbar-hide">
+          <div className="flex gap-2 overflow-x-auto pb-1 -mx-4 px-4 scrollbar-hide">
             {selectedDishes.map((dish) => (
               <div
                 key={dish.id}
-                className="flex-shrink-0 flex items-center gap-1.5 sm:gap-2 bg-surface border border-border rounded-full px-2 sm:px-3 py-1 sm:py-1.5"
+                className="flex-shrink-0 flex items-center gap-2 bg-surface border border-border rounded-full px-3 py-1.5"
               >
                 {dish.image_url && (
-                  <div className="w-5 h-5 sm:w-6 sm:h-6 rounded-full overflow-hidden relative">
+                  <div className="w-6 h-6 rounded-full overflow-hidden relative">
                     <Image
                       src={dish.image_url}
                       alt={dish.name}
@@ -223,7 +208,7 @@ export function StepTasteButtons() {
                     />
                   </div>
                 )}
-                <span className="text-[10px] sm:text-xs font-medium text-text-primary whitespace-nowrap">
+                <span className="text-xs font-medium text-text-primary whitespace-nowrap">
                   {dish.name}
                 </span>
               </div>

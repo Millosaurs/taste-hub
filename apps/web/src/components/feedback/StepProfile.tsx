@@ -7,7 +7,6 @@ import { CategoryBadge } from "@/components/ui/badge";
 import { useFeedbackStore } from "@/store/feedbackStore";
 import { client } from "@/utils/orpc";
 import type { FlavorProfile, TasteProfile } from "@idt-shit/db";
-import { Hand, ArrowRight } from "lucide-react";
 
 const FLAVOR_LABELS: Array<{ key: keyof FlavorProfile; label: string }> = [
   { key: "spice", label: "Spice" },
@@ -44,7 +43,7 @@ export function StepProfile() {
 
   if (loading) {
     return (
-      <div className="min-h-svh bg-base flex items-center justify-center">
+      <div className="min-h-svh bg-canvas flex items-center justify-center">
         <div className="text-text-secondary">Loading your profile...</div>
       </div>
     );
@@ -53,18 +52,16 @@ export function StepProfile() {
   const visitCount = user?.visit_count ?? 0;
 
   return (
-    <div className="min-h-svh bg-base flex items-center justify-center px-4 py-6">
+    <div className="min-h-svh bg-canvas flex items-center justify-center px-4 py-6">
       <div className="w-full max-w-md">
-        <div className="card space-y-5 sm:space-y-6 text-center p-4 sm:p-6">
+        <div className="card space-y-5 sm:space-y-6 text-center p-5 sm:p-6">
           {/* Welcome header */}
-          <div>
-            <div className="flex items-center justify-center gap-2">
-              <h1 className="text-xl sm:text-2xl font-bold text-text-primary">
-                Welcome back, {user?.name ?? "friend"}!
-              </h1>
-              <Hand className="w-6 h-6 sm:w-7 sm:h-7 text-accent-yellow" />
-            </div>
-            <p className="text-text-secondary text-sm mt-1">
+          <div className="space-y-1">
+            <p className="text-4xl">👋</p>
+            <h1 className="text-2xl sm:text-2xl font-bold text-text-primary">
+              Welcome back, {user?.name ?? "friend"}!
+            </h1>
+            <p className="text-text-secondary text-sm">
               Visit #{visitCount + 1}
             </p>
           </div>
@@ -73,23 +70,26 @@ export function StepProfile() {
             <>
               {/* Category display */}
               <CategoryBadge
-                category={profile.category_label ?? "STILL DISCOVERING"}
+                emoji={profile.category_emoji ?? "🔍"}
+                label={profile.category_label ?? "STILL DISCOVERING"}
                 size="lg"
               />
 
               {/* Category message */}
-              <div className="bg-raised rounded-[14px] p-3 sm:p-4">
-                <p className="text-text-secondary text-xs sm:text-sm leading-relaxed">
+              <div className="relative bg-raised rounded-[14px] p-4">
+                <span className="absolute -top-2 left-4 text-2xl text-accent-yellow">"</span>
+                <p className="text-text-primary text-sm leading-relaxed italic px-2">
                   {profile.category_message}
                 </p>
+                <span className="absolute -bottom-2 right-4 text-2xl text-accent-yellow">"</span>
               </div>
 
               {/* Flavor DNA */}
-              <div className="space-y-3 sm:space-y-4 text-left">
-                <h3 className="section-label text-center text-[10px] sm:text-xs">
+              <div className="space-y-3 text-left">
+                <h3 className="section-label text-center text-xs">
                   YOUR FLAVOR DNA
                 </h3>
-                <div className="space-y-2.5 sm:space-y-3">
+                <div className="space-y-3">
                   {FLAVOR_LABELS.map((flavor, index) => (
                     <FlavorBar
                       key={flavor.key}
@@ -103,7 +103,7 @@ export function StepProfile() {
             </>
           ) : (
             <div className="py-8">
-              <p className="text-text-secondary">
+              <p className="text-text-secondary text-base">
                 Let's start building your taste profile!
               </p>
             </div>
@@ -114,11 +114,10 @@ export function StepProfile() {
             type="button"
             variant="primary"
             size="xl"
-            className="w-full flex items-center justify-center gap-2"
+            className="w-full"
             onClick={handleContinue}
           >
-            GIVE FEEDBACK
-            <ArrowRight className="w-5 h-5" />
+            GIVE FEEDBACK →
           </Button>
         </div>
       </div>

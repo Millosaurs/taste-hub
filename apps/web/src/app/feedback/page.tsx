@@ -12,7 +12,7 @@ export default function FeedbackPage() {
   const { step } = useFeedbackStore();
 
   return (
-    <main className="min-h-screen bg-base">
+    <main className="min-h-screen bg-canvas">
       {/* Phone step - always rendered as the base */}
       {step === "phone" && <StepPhone />}
 
